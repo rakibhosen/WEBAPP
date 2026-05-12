@@ -1,0 +1,70 @@
+@model UserAccessViewModel
+@{
+    ViewData["Title"] = "User Access";
+}
+
+<section class="page-heading admin-heading">
+    <div>
+        <h1>User Access</h1>
+        <p class="text-muted">Manage operator roles, branch privileges, and permission coverage.</p>
+    </div>
+    <button type="button" class="btn btn-primary" data-modal-url="@Url.Action("UserEditor", "Admin")" data-modal-title="Create user">
+        New user
+    </button>
+</section>
+
+<div class="admin-summary">
+    <div class="metric-card">
+        <span>Active Operators</span>
+        <strong>@Model.ActiveOperatorCount</strong>
+    </div>
+    <div class="metric-card">
+        <span>Privileged Roles</span>
+        <strong>@Model.PrivilegedRoleCount</strong>
+    </div>
+    <div class="metric-card">
+        <span>Access Policy</span>
+        <strong>@Model.AccessPolicy</strong>
+    </div>
+</div>
+
+<div class="table-responsive banking-table">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Role</th>
+                <th>Permissions</th>
+                <th class="text-end">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                var initial = string.IsNullOrWhiteSpace(user.DisplayName) ? "U" : user.DisplayName[..1].ToUpperInvariant();
+                var roleText = user.Roles.Count > 0 ? string.Join(", ", user.Roles) : "Unassigned";
+                var permissionText = user.Permissions.Count > 0 ? string.Join(", ", user.Permissions) : "No permissions";
+                var roleClass = user.Roles.Contains("Admin", StringComparer.OrdinalIgnoreCase)
+                    ? "role-admin"
+                    : user.Roles.Contains("Manager", StringComparer.OrdinalIgnoreCase) ? "role-manager" : "role-user";
+
+                <tr>
+                    <td>
+                        <div class="user-cell">
+                            <span class="user-avatar">@initial</span>
+                            <span>
+                                <strong>@user.DisplayName</strong>
+                                <small>@user.UserName</small>
+                            </span>
+                        </div>
+                    </td>
+                    <td><span class="role-pill @roleClass">@roleText</span></td>
+                    <td><span class="permission-list">@permissionText</span></td>
+                    <td class="text-end">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" data-modal-url="@Url.Action("UserEditor", "Admin")" data-modal-title="Edit @user.DisplayName">Edit</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<section class="page-heading">
+    <div>
+        <h1>Dashboard</h1>
+        <p class="text-muted">Cookie auth, permission checks, and AJAX page loading are active.</p>
+    </div>
+</section>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="metric-card">
+            <span>Signed in as</span>
+            <strong>@User.Identity?.Name</strong>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="metric-card">
+            <span>Authentication</span>
+            <strong>Cookie</strong>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="metric-card">
+            <span>Navigation</span>
+            <strong>AJAX</strong>
+        </div>
+    </div>
+</div>

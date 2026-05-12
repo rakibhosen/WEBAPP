@@ -1,0 +1,64 @@
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="login-panel">
+    <section class="login-hero" aria-label="Banking security overview">
+        <div class="brand-lockup">
+            <span class="brand-mark">AB</span>
+            <span>
+                <strong>Apex Bank</strong>
+                <small>Administrative Banking Suite</small>
+            </span>
+        </div>
+        <h1>Secure back-office access for branch and operations teams.</h1>
+        <p>Monitor users, permissions, reports, and administrative workflows from one controlled portal.</p>
+        <div class="assurance-grid">
+            <div>
+                <span>Session</span>
+                <strong>Cookie secured</strong>
+            </div>
+            <div>
+                <span>Access</span>
+                <strong>Role based</strong>
+            </div>
+            <div>
+                <span>Audit</span>
+                <strong>Permission aware</strong>
+            </div>
+        </div>
+    </section>
+    <section class="login-card" aria-label="Sign in">
+        <div class="login-card-header">
+            <span class="secure-badge">Secure sign in</span>
+            <h2>Welcome back</h2>
+            <p>Use your issued operator credentials to continue.</p>
+        </div>
+
+        <form asp-action="Login" asp-controller="Account" method="post" class="mt-4">
+            @Html.AntiForgeryToken()
+            <input asp-for="ReturnUrl" type="hidden" />
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+            <div class="mb-3">
+                <label asp-for="UserName" class="form-label"></label>
+                <input asp-for="UserName" class="form-control" autocomplete="username" autofocus />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" autocomplete="current-password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Sign in</button>
+            <p class="demo-credentials">Demo: admin/admin123, manager/manager123, user/user123</p>
+        </form>
+    </section>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,25 @@
+@model IReadOnlyCollection<APP.Application.Identity.MenuItemDto>
+
+@foreach (var item in Model)
+{
+    if (item.Children.Count > 0)
+    {
+        <details class="bank-nav-group" open>
+            <summary class="bank-nav-link bank-nav-summary" data-menu-key="@item.Key">
+                <span class="nav-dot"></span>
+                <span class="nav-label">@item.Text</span>
+                <span class="nav-chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="bank-nav-children">
+                @await Html.PartialAsync("_SidebarMenu", item.Children)
+            </div>
+        </details>
+    }
+    else
+    {
+        <a class="bank-nav-link" href="@item.Url" data-spa-link data-permission="@item.Permission" data-menu-key="@item.Key">
+            <span class="nav-dot"></span>
+            <span class="nav-label">@item.Text</span>
+        </a>
+    }
+}

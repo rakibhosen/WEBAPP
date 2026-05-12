@@ -1,0 +1,91 @@
+@using APP.Application.Identity
+@using APP.Application.Security
+@inject IMenuService MenuService
+@{
+    var isSignedIn = User.Identity?.IsAuthenticated == true;
+    var menuItems = isSignedIn
+        ? await MenuService.GetMenuAsync(User, (controller, action) => Url.Action(action, controller) ?? "#")
+        : Array.Empty<MenuItemDto>();
+    var displayName = User.FindFirst(AppClaimTypes.DisplayName)?.Value ?? User.Identity?.Name;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Apex Bank Admin</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/APP.WEB.styles.css" asp-append-version="true" />
+</head>
+<body class="@(isSignedIn ? "app-shell" : "auth-shell")">
+    @if (isSignedIn)
+    {
+        <aside class="bank-sidebar">
+            <a class="bank-brand" asp-area="" asp-controller="Home" asp-action="Index" data-spa-link>
+                <span class="brand-mark">AB</span>
+                <span>
+                    <strong>Apex Bank</strong>
+                    <small>Operations Portal</small>
+                </span>
+            </a>
+            <nav class="bank-nav" aria-label="Primary navigation">
+                @await Html.PartialAsync("_SidebarMenu", menuItems)
+            </nav>
+            <div class="sidebar-status">
+                <span>Environment</span>
+                <strong>Secure Admin</strong>
+            </div>
+        </aside>
+        <div class="bank-main">
+            <header class="bank-topbar">
+                <div>
+                    <span class="topbar-kicker">Apex Bank</span>
+                    <strong>@ViewData["Title"]</strong>
+                </div>
+                <div class="topbar-user">
+                    <span class="user-avatar">@((displayName ?? "U").Substring(0, 1).ToUpperInvariant())</span>
+                    <span>@displayName</span>
+                    <form asp-controller="Account" asp-action="Logout" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">Logout</button>
+                    </form>
+                </div>
+            </header>
+            <main id="app-content" role="main" class="bank-content">
+                @RenderBody()
+            </main>
+        </div>
+    }
+    else
+    {
+        <main id="app-content" role="main">
+            @RenderBody()
+        </main>
+    }
+
+    <div class="modal fade" id="app-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+
+    @if (!isSignedIn)
+    {
+        <footer class="auth-footer text-muted">
+            &copy; 2026 Apex Bank. Administrative access only.
+        </footer>
+    }
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
