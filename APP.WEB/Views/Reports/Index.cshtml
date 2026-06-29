@@ -3,39 +3,38 @@
     ViewData["Title"] = "Reports";
 }
 
-<section class="page-heading">
-    <div>
-        <h1>Reports</h1>
-        <p class="text-muted">Report actions and widgets render only when the signed-in user has access.</p>
+<div class="ab-page">
+    <div class="ab-page-header">
+        <div>
+            <h1>Reports</h1>
+            <p>Report actions and widgets render only when the signed-in user has access.</p>
+        </div>
+        @if (User.HasPermission(AppPermissions.UsersManage))
+        {
+            <button type="button" class="ds-btn ds-btn-primary"
+                    data-modal-url="@Url.Action("UserEditor", "Admin")"
+                    data-modal-title="Create user">
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></svg>
+                New user
+            </button>
+        }
     </div>
-</section>
 
-<div class="row g-3">
-    <div class="col-md-4">
-        <div class="metric-card">
-            <span>Total Sales</span>
-            <strong>$42,700</strong>
+    <div class="ds-grid ds-col-3">
+        <div class="ds-metric">
+            <span class="ds-metric-label">Total Sales</span>
+            <span class="ds-metric-value">$42,700</span>
+            <span class="ds-metric-delta up">↑ 12% this month</span>
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="metric-card">
-            <span>Open Orders</span>
-            <strong>18</strong>
+        <div class="ds-metric">
+            <span class="ds-metric-label">Open Orders</span>
+            <span class="ds-metric-value">18</span>
+            <span class="ds-metric-delta down">↓ 3 since yesterday</span>
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="metric-card">
-            <span>Pending Reviews</span>
-            <strong>7</strong>
+        <div class="ds-metric">
+            <span class="ds-metric-label">Pending Reviews</span>
+            <span class="ds-metric-value">7</span>
+            <span class="ds-metric-delta" style="color:var(--ds-ink-4);">→ no change</span>
         </div>
     </div>
 </div>
-
-@if (User.HasPermission(AppPermissions.UsersManage))
-{
-    <div class="mt-4">
-        <button type="button" class="btn btn-outline-primary" data-modal-url="@Url.Action("UserEditor", "Admin")" data-modal-title="Create user">
-            Open admin popup
-        </button>
-    </div>
-}

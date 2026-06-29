@@ -20,28 +20,6 @@
         return await response.text();
     }
 
-    function setActiveLink(url) {
-        document.querySelectorAll(".bank-nav-group").forEach(group => {
-            group.classList.remove("active-parent");
-        });
-
-        document.querySelectorAll("a[data-spa-link]").forEach(link => {
-            const isActive = link.href === url;
-            link.classList.toggle("active", isActive);
-
-            if (isActive) {
-                let parent = link.parentElement;
-                while (parent) {
-                    if (parent.classList?.contains("bank-nav-group")) {
-                        parent.classList.add("active-parent");
-                        parent.open = true;
-                    }
-
-                    parent = parent.parentElement;
-                }
-            }
-        });
-    }
 
     async function loadPage(url, pushState = true) {
         const html = await fetchHtml(url);
@@ -113,7 +91,7 @@
         loadPage(window.location.href, false);
     });
 
-    setActiveLink(window.location.href);
+/*    setActiveLink(window.location.href);*/
 
     window.AppModal = { open: openModal };
 })();

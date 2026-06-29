@@ -2,30 +2,26 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<section class="page-heading">
-    <div>
-        <h1>Dashboard</h1>
-        <p class="text-muted">Cookie auth, permission checks, and AJAX page loading are active.</p>
+<div class="ab-page">
+    <div class="ab-page-header">
+        <div>
+            <h1>Dashboard</h1>
+            <p>Cookie auth, permission checks, and AJAX page loading are active.</p>
+        </div>
     </div>
-</section>
 
-<div class="row g-3">
-    <div class="col-md-4">
-        <div class="metric-card">
-            <span>Signed in as</span>
-            <strong>@User.Identity?.Name</strong>
+    <div class="ds-grid ds-col-3">
+        <div class="ds-metric">
+            <span class="ds-metric-label">Signed in as</span>
+            <span class="ds-metric-value" style="font-size:1.375rem;">@User.Identity?.Name</span>
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="metric-card">
-            <span>Authentication</span>
-            <strong>Cookie</strong>
+        <div class="ds-metric">
+            <span class="ds-metric-label">Authentication</span>
+            <span class="ds-metric-value" style="font-size:1.375rem;">Cookie</span>
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="metric-card">
-            <span>Navigation</span>
-            <strong>AJAX</strong>
+        <div class="ds-metric">
+            <span class="ds-metric-label">Navigation</span>
+            <span class="ds-metric-value" style="font-size:1.375rem;">AJAX</span>
         </div>
     </div>
 </div>
