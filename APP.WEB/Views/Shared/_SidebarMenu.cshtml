@@ -2,24 +2,47 @@
 
 @foreach (var item in Model)
 {
-    if (item.Children.Count > 0)
+    var hasChildren = item.Children != null && item.Children.Count > 0;
+
+    if (hasChildren)
     {
-        <details class="bank-nav-group" open>
-            <summary class="bank-nav-link bank-nav-summary" data-menu-key="@item.Key">
-                <span class="nav-dot"></span>
-                <span class="nav-label">@item.Text</span>
-                <span class="nav-chevron" aria-hidden="true"></span>
-            </summary>
-            <div class="bank-nav-children">
+        <li class="sidebar-item">
+
+            <a class="sidebar-link has-arrow"
+                   href="javascript:void(0)"
+                   aria-expanded="false"
+                   data-menu-key="@item.Key">
+                <i data-feather="@item.Icon" class="feather feather-icon"></i>
+
+                <span class="hide-menu">
+                    @item.Text
+                </span>
+            </a>
+
+            <ul aria-expanded="false"
+                class="collapse first-level base-level-line">
+
                 @await Html.PartialAsync("_SidebarMenu", item.Children)
-            </div>
-        </details>
+
+            </ul>
+
+        </li>
     }
     else
     {
-        <a class="bank-nav-link" href="@item.Url" data-spa-link data-permission="@item.Permission" data-menu-key="@item.Key">
-            <span class="nav-dot"></span>
-            <span class="nav-label">@item.Text</span>
-        </a>
+        <li class="sidebar-item">
+
+            <a class="sidebar-link"
+                   href="@item.Url"
+                   data-spa-link
+                   data-permission="@item.Permission"
+                   data-menu-key="@item.Key">
+
+                <span class="hide-menu">
+                    @item.Text
+                </span>
+            </a>
+
+        </li>
     }
 }

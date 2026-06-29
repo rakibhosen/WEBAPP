@@ -2,11 +2,24 @@
     ViewData["Title"] = "Privacy";
 }
 
-<section class="page-heading">
-    <div>
-        <h1>Privacy</h1>
-        <p class="text-muted">Only roles with Privacy.View can open this page or see its menu item.</p>
+<div class="ab-page">
+    <div class="ab-page-header">
+        <div>
+            <h1>Privacy</h1>
+            <p>Only roles with <code class="ds-chip-code">Privacy.View</code> can open this page or see its menu item.</p>
+        </div>
     </div>
-</section>
 
-<p>This is a protected content page loaded through the same layout or via AJAX navigation.</p>
+    <div class="ds-card">
+        <div class="ds-card-body">
+            <div class="ds-alert ds-alert-info" style="margin-bottom:20px;">
+                <span class="ds-alert-icon">ℹ</span>
+                <span>This is a protected content page loaded through the same layout or via AJAX navigation.</span>
+            </div>
+            <p class="ds-text-muted" style="margin:0;">
+                Access to this page is permission-gated. If you can see this content, your current role includes the
+                <code class="ds-chip-code">Privacy.View</code> permission.
+            </p>
+        </div>
+    </div>
+</div>
